@@ -9,7 +9,7 @@ router.get("/", mainController.showMain)
 
 router.get("/topics", topicController.showTopics)
     .get("/topics/:id", topicController.showTopic)
-    .post("/topics", topicController.addTopic)
+    .post("/topics", topicController.createTopic)
     .post("/topics/:id/delete", topicController.deleteTopic)
 
 export { router };
