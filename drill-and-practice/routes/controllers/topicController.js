@@ -1,5 +1,6 @@
 import * as topicService from "../../services/topicService.js"
 import * as userService from "../../services/userService.js"
+import * as questionService from "../../services/questionService.js"
 import { validasaur } from "../../deps.js"
 
 const showTopics = async ({render, user}) => {
@@ -37,7 +38,7 @@ const createTopic = async ({request, response, user}) => {
             topicData.validationErrors = errors
             render("topics.eta", topicData)
         } else {
-            await topicService.addTopic( user.id, params.get("name") )
+            await topicService.addTopic( user.id, topicData.name )
         }        
     }
     response.redirect("/topics")    

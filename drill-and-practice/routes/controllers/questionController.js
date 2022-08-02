@@ -9,20 +9,20 @@ const getQuestionData = async (request) => {
     const body = request.body({type: "form"})
     const params = await body.value
     return {
-        name: params.get("question_text")
+        question_text: params.get("question_text")
     }
 } 
 
-const createQuestion = async ({request, response, user}) => {
+const createQuestion = async ({request, response, user, params}) => {
     if (user.admin) {
-        const topicData = await getQuestionData(request)
-        const [passes, errors] = await validasaur.validate(topicData, topicValidationRules)
+        const questionData = await getQuestionData(request)
+        const [passes, errors] = await validasaur.validate(questionData, topicValidationRules)
         if (!passes) {
             console.log(errors)
-            topicData.validationErrors = errors
-            render("topics.eta", topicData)
+            questionData.validationErrors = errors
+            render("topics.eta", questionData)
         } else {
-            await topicService.addTopic( user.id, params.get("name") )
+            await questionService.addQuestion(user.id, params.id, questionData.question_text)
         }        
     }
     response.redirect("/topics/")    
